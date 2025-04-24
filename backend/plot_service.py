@@ -1,3 +1,4 @@
+import base64
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -24,12 +25,12 @@ CSV_CONTEXT = {
     'energy_prices': {
         'commodity_to_include':['Fuel (diesel, heating, parallel market)', 'Fuel (diesel, transport, parallel market)', 'Fuel (diesel)',  'Oil'],
         'csv_path':'data/energy_prices.csv',
-        'columns_to_keep' : ['Commodity', 'Price Date', 'Price']
+        'columns_to_keep' : ['Commodity', 'Price Date', 'Price', 'Unit', 'Currency']
     },
     'retail_prices_key_commodities' : {
         'commodity_to_include':['Rice', 'Chicken', 'Wheat', 'Eggs'],
         'csv_path':'data/key_prices.csv',
-        'columns_to_keep' : ['Commodity', 'Price Date', 'Price']
+        'columns_to_keep' : ['Commodity', 'Price Date', 'Price', 'Unit', 'Currency']
 
     }
 }
@@ -201,6 +202,31 @@ def fetch_exchange_rate_csv_generator(country):
     except Exception as e:
         yield f"An unexpected error occurred for {country} ({adm0Code}): {e}\n".encode('utf-8')
 
+
+def plot_csv(title, csv, from_path=False):
+    if from_path:
+        df = pd.read_csv(csv)
+    else:
+        df = pd.read_csv(io.StringIO(csv))
+    unit = df['Unit'].iloc[0]
+    currency = df['Currency'].iloc[0]
+    pivot_table = df.pivot_table(index='Price Date', columns='Commodity', values='Price')
+    plt.figure(figsize=(12, 6))
+    for product in pivot_table.columns:
+      plt.plot(pivot_table.index, pivot_table[product], marker='o', label=product)
+    plt.xlabel('Month')
+    plt.ylabel(f'Price {currency} per {unit}')
+    plt.title(f'{title}')
+    plt.legend()
+    plt.grid(True)
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format="png")
+    img_buf.seek(0)  # Reset buffer position to the beginning
+
+    # Encode the image to Base64
+    base64_encoded = base64.b64encode(img_buf.read()).decode("utf-8")
+    plt.close()  # Close the figure to free memory
+    return base64_encoded
 
 def fetch_parallel_exchange_rate_csv(country):
   # Import necessary libraries
