@@ -19,7 +19,7 @@ from google.genai.types import (
 )
 
 
-def get_report(country: str, selected_topics: List[str]) -> str:
+def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str:
 
     def stream_data(iterator):
         buffer = ""
@@ -75,8 +75,9 @@ def get_report(country: str, selected_topics: List[str]) -> str:
 
     data_urls = [
         "https://reliefweb.int/updates?list=Syrian%20Arab%20Republic%20%28Syria%29%20Updates&advanced-search=%28PC226%29",
-        "https://www.bbc.com/news/topics/cx1m7zg0w5zt",
+        # "https://www.bbc.com/news/topics/cx1m7zg0w5zt",
     ]
+    data_urls += urls
 
     data_pdfs = [
         Part.from_bytes(

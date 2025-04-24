@@ -31,6 +31,7 @@ async def get_countries_endpoint():
 
 @app.post("/report")
 async def report_endpoint(payload: dict = {}):
+    print(f"REQUEST: {payload}")
     result = generate_report(payload)
     return {"result": result}
 
