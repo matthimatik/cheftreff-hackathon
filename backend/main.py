@@ -8,7 +8,7 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/generate_report")
-async def call_service():
-    result = generate_report()
+@app.post("/generate_report")
+async def main_endpoint(payload: dict):
+    result = generate_report(payload)
     return {"result": result}
