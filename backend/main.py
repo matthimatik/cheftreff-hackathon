@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from service import generate_report, generate_report_for_country
-from plot_service import get_countries
+from fastapi.responses import StreamingResponse
+from service import generate_report
+from plot_service import generate_price_over_month_csv, get_countries
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-
 
 app = FastAPI()
 origins = [
@@ -37,3 +37,12 @@ async def get_countries_endpoint():
 async def report_endpoint(payload: dict):
     result = generate_report_for_country(payload)
     return {"result": result}
+
+@app.get("/csv/{country}/{context}")
+async def generate_price_over_month_csv_endpoint(country, context):
+    result = generate_price_over_month_csv(country, context)
+    headers = {
+        "Content-Disposition": "attachment; filename=export.csv",
+        "Content-Type": "text/csv",
+    }
+    return StreamingResponse(result, headers=headers, media_type="text/csv")
