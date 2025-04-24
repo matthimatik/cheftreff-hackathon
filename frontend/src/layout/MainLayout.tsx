@@ -7,9 +7,10 @@ const MainLayout = () => {
         <div className="flex flex-col min-h-screen">
             <header className="bg-gray-800 text-white p-4">
                 <nav className="flex justify-between">
-                    <div className="text-lg font-bold">Report Generator</div>
+                    <div className="text-lg font-bold">World Food Programme</div>
                     <div>
                         <NavLink to="/" className="mx-2 hover:text-gray-400">Start</NavLink>
+                        <NavLink to="/compare" className="mx-2 hover:text-gray-400">Compare</NavLink>
                         <NavLink to="/about" className="mx-2 hover:text-gray-400">About</NavLink>
                     </div>
                 </nav>
@@ -20,7 +21,7 @@ const MainLayout = () => {
             </main>
 
             <footer className="bg-gray-800 text-white p-4 text-center">
-                &copy; 2025 Report Generator
+                &copy; 2025 World Food Programme
             </footer>
         </div>
     );

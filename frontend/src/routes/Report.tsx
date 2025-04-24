@@ -6,6 +6,10 @@ import { LineChartComponent } from '@/LineChart';
 import { LineChart } from 'recharts';
 import CommodityChart from '@/CommodityChart';
 import CommodityCharts from '@/CommodityChart';
+import { el } from 'date-fns/locale';
+import { Button } from '@/components/ui/button';
+import { Trash } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 const ALL_TOPICS = {
     'HIGHLIGHTS': 'HIGHLIGHTS',
@@ -98,7 +102,6 @@ const Report: React.FC = () => {
     };
     }, [selectedTopics]);*/
 
-
   // Toggle selected topics
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -114,6 +117,8 @@ const Report: React.FC = () => {
     // return line chart with csv data
     const csvData = csvFiles[topic];
 
+    console.log('CSV data for topic:', topic, csvData);
+
     // change data from csv to json
     /*const jsonData = csvData?.split('\n').map((line) => {
       const [date, value] = line.split(',');
@@ -125,6 +130,12 @@ const Report: React.FC = () => {
     if (csvData) {
       // if topic == energy_prices, show commodity chart
         if (topic === 'energy_prices') {
+            return (
+                <CommodityCharts
+                    data={csvData}
+                />
+            );
+        } else if (topic === 'exchange_rate') {
             return (
                 <CommodityCharts
                     data={csvData}
@@ -143,6 +154,7 @@ const Report: React.FC = () => {
         const body = JSON.stringify({
             country: countryName,
             selected_topics: selectedTopics,
+            urls: urlList,
             });
 
       console.log('Sending data to backend:', body);
@@ -201,10 +213,71 @@ const Report: React.FC = () => {
     sendData();
   }, []);*/
 
+  const [newUrl, setNewUrl] = useState<string>('');
+  const [urlList, setUrlList] = useState<string[]>([]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewUrl(event.target.value);
+  };
+
+  const handleAddUrl = () => {
+    if (newUrl.trim() !== '') {
+      // Basic URL validation (you might want a more robust one)
+      try {
+        console.log('Adding URL:', newUrl);
+        // add to url: https://
+        new URL(newUrl + (newUrl.startsWith('http') ? '' : 'https://'));
+        setUrlList([...urlList, newUrl]);
+        setNewUrl('');
+      } catch (error) {
+        alert('Please enter a valid URL.');
+      }
+    }
+  };
+
+  const handleRemoveUrl = (index: number) => {
+    const updatedList = urlList.filter((_, i) => i !== index);
+    setUrlList(updatedList);
+  };
+
   return (
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Building Report for: {countryName}</h2>
 
+      <div className="flex items-center mb-4">
+        <Input
+          type="url"
+          placeholder="Add a datasource URL"
+          value={newUrl}
+          onChange={handleInputChange}
+          className="mr-2"
+        />
+        <Button onClick={handleAddUrl}>Add URL</Button>
+      </div>
+
+      {urlList.length > 0 && (
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold mb-2">Trustworthy datasources: </h2>
+          <ul className="border rounded-md">
+            {urlList.map((url, index) => (
+              <li
+                key={index}
+                className="px-4 py-2 border-b last:border-b-0 flex items-center justify-between"
+              >
+                <span className="truncate">{url}</span>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => handleRemoveUrl(index)}
+                >
+                  <Trash className="h-4 w-4 text-red-500" />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      
       <div className="space-y-2">
         {/* for each topic */}
         {Object.entries(ALL_TOPICS).map(([key, value]) => (

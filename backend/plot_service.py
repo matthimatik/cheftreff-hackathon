@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 import requests
+from datetime import datetime, timedelta
 
 # all topics
 TOPICS = {
@@ -154,6 +155,11 @@ def get_countries():
 
 
 def generate_price_over_month_csv(country, context):
+  print(context)
+  if context == "exchange_rate":
+    print("Fetching exchange rate data...")
+    return fetch_parallel_exchange_rate_csv(country)
+  
   df = pd.read_csv(CSV_CONTEXT[context]['csv_path'])
   df['Price Date'] = pd.to_datetime(df['Price Date'])
   columns_to_keep = CSV_CONTEXT[context]['columns_to_keep']
@@ -196,4 +202,96 @@ def fetch_exchange_rate_csv_generator(country):
         yield f"An unexpected error occurred for {country} ({adm0Code}): {e}\n".encode('utf-8')
 
 
-       
+def fetch_parallel_exchange_rate_csv(country):
+  # Import necessary libraries
+
+  # Assume your CSV file is named 'exchange_rates.csv'
+  # file_path = 'parallel_exchange_rates.csv'
+  
+  base_url = "https://api.vam.wfp.org/economicExplorer/Currency/ExchangeRateExport"
+  request_body = {"rateType": "Parallel"}
+  adm0Code = COUNTRY_MAPPING.get(country)
+  if adm0Code is None:
+      yield f"Error: Country '{country}' not found in mapping.\n".encode('utf-8')
+      return
+
+  payload = {**request_body, "adm0Code": adm0Code}
+  
+  try:
+        response = requests.post(base_url, json=payload, stream=True, timeout=10)
+        response.raise_for_status()
+        print("Response: ", response.content)
+
+        if 'text/csv' in response.headers.get('Content-Type', ''):
+          
+            # get csv from content
+            csv_content = response.content.decode('utf-8')
+            
+            print("CSV content fetched successfully.")
+            
+            # Print the first 500 characters of the CSV content
+            print(csv_content[:2000])  # Print the first 500 characters for debugging
+            
+            # read dataframe from csv string
+            # df = pd.read_csv(io.StringIO(csv_content))
+            
+            df = pd.read_csv(
+                io.StringIO(csv_content),
+                skip_blank_lines=True,
+                skipinitialspace=True  # remove spaces after commas
+            )
+            
+            print("Parsed columns:", df.columns.tolist())
+            # Check if the expected columns are present
+            if 'Date' not in df.columns or 'Value' not in df.columns:
+                yield f"Error: CSV does not contain 'Date' and 'Value' columns.\n".encode('utf-8')
+                return
+            # Print the first few rows of the DataFrame for debugging
+            print("first rows of the DataFrame:", df.head())
+            
+            lines = csv_content.splitlines()
+            print("Total lines:", len(lines))
+            print("First 5 lines:")
+            for line in lines[:5]:
+              print(repr(line))
+            
+            # print("CSV content loaded into DataFrame.", df.head())
+            
+            # Convert the 'Date' column to datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y', errors='coerce')
+            
+            # Calculate the date 12 months ago from today
+            twelve_months_ago = datetime.now() - timedelta(days=365) # Assuming an average of 365 days in a year
+
+            # Filter the DataFrame to keep only entries with dates within the last 12 months
+            df_cleaned = df[df['Date'] >= twelve_months_ago]
+
+            # Group the DataFrame by 'Date' and calculate the average of the 'Value' for each day
+            daily_aggregated_value = df_cleaned.groupby('Date')['Value'].mean().reset_index()
+
+            # Rename the 'Value' column to 'Aggregated_Value' for clarity
+            daily_aggregated_value.rename(columns={'Value': 'Aggregated_Value'}, inplace=True)
+
+            # Print the resulting aggregated DataFrame
+            print("Daily Aggregated Values:")
+            print(daily_aggregated_value)
+
+
+            # Save the cleaned DataFrame back to a new CSV file (optional, but good practice)
+            cleaned_file_path = 'parallel_exchange_rates_cleaned.csv'
+            daily_aggregated_value.to_csv(cleaned_file_path, index=False)
+
+            # send the cleaned data to the user
+            csv_buffer = io.StringIO()
+            daily_aggregated_value.to_csv(csv_buffer, index=False)
+            
+            csv_buffer.seek(0)
+            return csv_buffer
+        else:
+            yield f"Error: Unexpected content type '{response.headers.get('Content-Type')}' for {country} ({adm0Code})\n".encode('utf-8')
+            response.close()
+            
+  except requests.exceptions.RequestException as e:
+        yield f"Error fetching data for {country} ({adm0Code}): {e}\n".encode('utf-8')
+  except Exception as e:
+        yield f"An unexpected error occurred for {country} ({adm0Code}): {e}\n".encode('utf-8')
