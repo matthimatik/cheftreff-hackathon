@@ -6,6 +6,7 @@ import { LineChartComponent } from '@/LineChart';
 import { LineChart } from 'recharts';
 import CommodityChart from '@/CommodityChart';
 import CommodityCharts from '@/CommodityChart';
+import { el } from 'date-fns/locale';
 
 const ALL_TOPICS = {
     'HIGHLIGHTS': 'HIGHLIGHTS',
@@ -114,6 +115,8 @@ const Report: React.FC = () => {
     // return line chart with csv data
     const csvData = csvFiles[topic];
 
+    console.log('CSV data for topic:', topic, csvData);
+
     // change data from csv to json
     /*const jsonData = csvData?.split('\n').map((line) => {
       const [date, value] = line.split(',');
@@ -125,6 +128,12 @@ const Report: React.FC = () => {
     if (csvData) {
       // if topic == energy_prices, show commodity chart
         if (topic === 'energy_prices') {
+            return (
+                <CommodityCharts
+                    data={csvData}
+                />
+            );
+        } else if (topic === 'exchange_rate') {
             return (
                 <CommodityCharts
                     data={csvData}
