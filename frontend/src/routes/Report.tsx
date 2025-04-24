@@ -99,7 +99,6 @@ const Report: React.FC = () => {
     };
     }, [selectedTopics]);*/
 
-
   // Toggle selected topics
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
