@@ -15,7 +15,6 @@ const ALL_TOPICS = {
     'retail_meb_non-food': 'Retail prices for MEB non-food components',
     'map': 'Map: Population density and MEB Mapping'
 };
-    
 
 const Report: React.FC = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -40,7 +39,7 @@ const Report: React.FC = () => {
             selected_topics: selectedTopics,
             });
 
-        console.log('Sending data to backend:', body);
+      console.log('Sending data to backend:', body);
 
       const response = await fetch('http://localhost:8000/report', {
         method: 'POST',
@@ -75,6 +74,40 @@ const Report: React.FC = () => {
       images,
     });*/ 
     };
+
+    useEffect(() => {
+        // Fetch data from the backend and set it to the preview 
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8000/csv/${countryName}/${selectedTopics[0]}`);
+           // get response csv
+            const data = await response.text();
+            console.log('CSV data:', data);
+
+            // parse csv and show in preview
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const pdfPreview = document.getElementById('pdf-preview');
+            if (pdfPreview) {
+              pdfPreview.innerHTML = ''; // Clear previous content
+              pdfPreview.appendChild(doc.documentElement);
+            }
+            console.log('Parsed HTML:', doc.documentElement);
+        };
+
+        if (selectedTopics.length > 0) {
+            console.log('Selected topics:', selectedTopics);
+            fetchData();
+        }
+
+    // Cleanup function to reset the preview when topics change
+    return () => {
+        const pdfPreview = document.getElementById('pdf-preview');
+        if (pdfPreview) {
+          pdfPreview.innerHTML = ''; // Clear previous content
+        }
+      };
+
+    }, [selectedTopics]);
 
   /*useEffect(() => {
     console.log('Country Name:', countryName);

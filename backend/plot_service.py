@@ -32,7 +32,7 @@ CSV_CONTEXT = {
 }
 
 def get_countries():
-  df = pd.read_csv(CSV_CONTEXT['energy']['csv_path'])
+  df = pd.read_csv(CSV_CONTEXT['energy_prices']['csv_path'])
   column_names = df['Country'].unique().tolist()
   return {"countries": column_names}
 
@@ -42,7 +42,7 @@ def generate_price_over_month_csv(country, context):
   columns_to_keep = CSV_CONTEXT[context]['columns_to_keep']
   commodity_to_include = CSV_CONTEXT[context]['commodity_to_include']
   filtered_df = df[(df['Country'] == country) & (df['Commodity'].isin(commodity_to_include))][columns_to_keep]
-  filtered_df.to_csv(f'.data/{country}_{context}.csv')
+  filtered_df.to_csv(f'data/{country}_{context}.csv')
   csv_buffer = io.StringIO()
   filtered_df.to_csv(csv_buffer, index=False)
   csv_buffer.seek(0)
