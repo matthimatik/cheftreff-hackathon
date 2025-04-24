@@ -33,7 +33,7 @@ const Report: React.FC = () => {
   // const navigate = useNavigate();
 
   const url = window.location.href;
-  const countryName = url.split('/').pop();
+  const countryName = url.split('/').pop()?.replace(/%20/g, ' ');
 
   // set initial value for each csv mapping of selected topics to undefined
   useEffect(() => {
