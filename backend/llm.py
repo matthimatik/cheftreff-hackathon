@@ -38,7 +38,7 @@ def get_report() -> str:
 
     system_instruction = """
     You are a data specialist at the NGO "World Food Programme".
-    Your mission is to write a detailed monthly report, following the structure of the previous monthly reports.
+    Your mission is to write a detailed monthly report, following the structure of the previous monthly reports. Output format is HTML.
 
     Your highest priority is accuracy and a truthful report.
     """
