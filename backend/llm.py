@@ -38,7 +38,7 @@ def get_report() -> str:
 
     system_instruction = """
     You are a data specialist at the NGO "World Food Programme".
-    Your mission is to write a detailed monthly report, following the structure of the previous monthly reports. Output format is HTML.
+    Your mission is to write a detailed monthly report, following the structure of the previous monthly reports. Output format is HTML. ONLY HTML, no text before or after the HTML.
 
     Your highest priority is accuracy and a truthful report.
     """
@@ -62,10 +62,14 @@ def get_report() -> str:
 
 
     template_pdfs = [
-    Part.from_bytes(
-        data=(DATA_DIR / "syria-template-1.pdf").read_bytes(),
-        mime_type="application/pdf",
-    ),
+        Part.from_bytes(
+            data=(DATA_DIR / "syria-template-1.pdf").read_bytes(),
+            mime_type="application/pdf",
+        ),
+        Part.from_bytes(
+            data=(DATA_DIR / "example_templates/syria.html").read_bytes(),
+            mime_type="text/html",
+        ),
     ]
 
     data_urls = [
