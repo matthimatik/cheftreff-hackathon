@@ -33,10 +33,36 @@ const Report: React.FC = () => {
   // Dummy image data (replace with actual base64 images if necessary)
   const images: string[] = [];
 
-  // Handle exporting PDF when button is clicked
-  const handleExport = () => {
-    exportPdf({ topics: selectedTopics, images });
-  };
+  const handleCreateReportTapped = () => {
+    const sendData = async () => {
+        const body = JSON.stringify({
+            country_name: countryName,
+            topics: selectedTopics,
+            });
+        console.log('Sending data to backend:', body);
+      const response = await fetch('http://localhost:8000/report', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body
+      });
+
+      if (!response.ok) {
+        console.error('Failed to generate report:', await response.text());
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Response from backend:', data);
+    };
+    sendData();
+    // Export the PDF with selected topics and images
+    /*exportPdf({
+      topics: selectedTopics,
+      images,
+    });*/ 
+    };
 
   /*useEffect(() => {
     console.log('Country Name:', countryName);
@@ -93,7 +119,7 @@ const Report: React.FC = () => {
       {/* ActionButton to trigger PDF export */}
       <ActionButton
         label="Export Report as PDF"
-        onClick={handleExport}
+        onClick={handleCreateReportTapped}
       />
     </div>
   );
