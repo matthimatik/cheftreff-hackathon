@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from plot_service import generate_price_over_month_csv, get_countries
 from service import generate_report
+from plot_service import fetch_exchange_rate_csv_generator, generate_price_over_month_csv, get_countries
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
 
 app = FastAPI()
 origins = [
@@ -40,3 +42,17 @@ async def generate_price_over_month_csv_endpoint(country, context):
         "Content-Type": "text/csv",
     }
     return StreamingResponse(result, headers=headers, media_type="text/csv")
+
+@app.get("/exchange-rate/{country}")
+async def get_exchange_rate(country: str):
+    """
+    Returns the exchange rate data as a CSV file for a given country.
+    """
+    csv_generator = fetch_exchange_rate_csv_generator(country)
+    headers = {
+        "Content-Disposition": f"attachment; filename=exchange_rate_{country.replace(' ', '_')}.csv",
+        "Content-Type": "text/csv",
+    }
+    return StreamingResponse(csv_generator, headers=headers, media_type="text/csv")
+
+            
