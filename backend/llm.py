@@ -18,16 +18,14 @@ from google.genai.types import (
     Content
 )
 
+def stream_data(iterator):
+    buffer = ""
+    for chunk in iterator:
+        buffer += chunk.text
+    return buffer
+
 
 def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str:
-
-    def stream_data(iterator):
-        buffer = ""
-        for chunk in iterator:
-            buffer += chunk.text
-        return buffer
-
-    
     client = genai.Client(api_key="AIzaSyDKiNNII-XOFMkQdJ3VQD61j8KgZEN-4xg")
     MODEL_ID = "gemini-2.5-flash-preview-04-17"
 
@@ -43,23 +41,6 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
 
     Your highest priority is accuracy and a truthful report.
     """
-
-
-    def crawl_website_data(href: str) -> str:
-        """
-        Call this method to retrieve the document from the website, if it interests you.
-
-        Args:
-            href: The href attribute from the link of the HTML
-        """
-        print(f"href: {href}")
-
-        request = requests.get(href)
-        if request.status_code == 200:
-            return request.text
-
-        raise Exception(f"Error: {request.status_code}")
-
 
 
     template_pdfs = [
