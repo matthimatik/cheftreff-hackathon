@@ -25,8 +25,8 @@ def get_countries():
 
 
 
-    
-    
+
+
 
 
 def generate_price_over_month_csv(country, context):
