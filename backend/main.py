@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from service import generate_report
-from plot_service import fetch_exchange_rate_csv_generator, generate_price_over_month_csv, get_countries
+from plot_service import fetch_exchange_rate_csv_generator, generate_price_over_month_csv, get_countries, plot_csv
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -56,4 +56,10 @@ async def get_exchange_rate(country: str):
     }
     return StreamingResponse(csv_generator, headers=headers, media_type="text/csv")
 
-            
+@app.get("/plot/{country}/{context}/base64")
+async def get_plot_base64(country, context):
+    csv = generate_price_over_month_csv(country, context)
+    base64_string = plot_csv(f'{country}_{context}', csv, from_path=False)
+    if "Error:" in base64_string:
+        return {"error": base64_string}  # Return the error message
+    return {"image_base64": base64_string}  
