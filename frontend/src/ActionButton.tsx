@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from './components/ui/button';
 
 interface ActionButtonProps {
   label: string;
@@ -8,11 +9,11 @@ interface ActionButtonProps {
 
 export const ActionButton: React.FC<ActionButtonProps> = ({ label, onClick, className }) => {
   return (
-    <button
+    <Button
       onClick={onClick}
-      className={`bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition ${className}`}
+      className={`w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 ${className}`}
     >
       {label}
-    </button>
+    </Button>
   );
 };
