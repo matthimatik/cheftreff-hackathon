@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { ActionButton } from '@/ActionButton';
 import { exportPdf } from '../utils/exportPdf';
 
-// Define the list of possible topics
-const ALL_TOPICS = [
-  'HIGHLIGHTS',
-  'Economic Updates',
-  'Daily wage',
-  'Global food prices and inflation trends',
-  'Minimum Expenditure Basket (MEB)',
-  'Retail prices for key commodities',
-  'Exchange rate',
-  'Energy prices',
-  'Retail prices for MEB food components',
-  'Retail prices for MEB non-food components',
-  'Map: Population density and MEB Mapping',
-];
+const ALL_TOPICS = {
+    'HIGHLIGHTS': 'HIGHLIGHTS',
+    'economic_updates': 'Economic Updates',
+    'daily_wage': 'Daily wage',
+    'global_food_prices_and_inflation_trends': 'Global food prices and inflation trends',
+    'meb': 'Minimum Expenditure Basket (MEB)',
+    'retail_prices_key_commodities': 'Retail prices for key commodities',
+    'exchange_rate': 'Exchange rate',
+    'energy_prices': 'Energy prices',
+    'retail_meb_food': 'Retail prices for MEB food components',
+    'retail_meb_non-food': 'Retail prices for MEB non-food components',
+    'map': 'Map: Population density and MEB Mapping'
+};
+    
 
 const Report: React.FC = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -101,18 +101,22 @@ const Report: React.FC = () => {
       <h2 className="text-xl font-semibold">Building Report for: {countryName}</h2>
 
       <div className="space-y-2">
-        {ALL_TOPICS.map((topic) => (
-          <label key={topic} className="flex items-center gap-2">
+        {/* for each topic */}
+        {Object.entries(ALL_TOPICS).map(([key, value]) => (
+          <div key={key} className="flex items-center">
             <input
               type="checkbox"
-              checked={selectedTopics.includes(topic)}
-              onChange={() => toggleTopic(topic)}
-              className="accent-blue-600"
+              id={key}
+              checked={selectedTopics.includes(key)}
+              onChange={() => toggleTopic(key)}
+              className="mr-2"
             />
-            <span>{topic}</span>
-          </label>
+            <label htmlFor={key} className="text-sm text-gray-700">
+              {value}
+            </label>
+          </div>
         ))}
-      </div>
+        </div>
 
       <div>
         <h3 className="font-medium mt-4 mb-2">Preview</h3>
