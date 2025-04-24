@@ -54,3 +54,36 @@ export const parseAndAggregateCSV = (
     });
   });
 };
+
+export interface CommodityEntry {
+  Commodity: string;
+  'Price Date': string;
+  Price: number;
+}
+
+export function parseAndGroupCommodityCsv(csvText: string): Record<string, { date: string; price: number }[]> {
+  const parsed = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  const entries = (parsed.data as any[]).map(row => ({
+    Commodity: row['Commodity'],
+    'Price Date': row['Price Date'],
+    Price: parseFloat(row['Price']),
+  }));
+
+  const grouped: Record<string, { date: string; price: number }[]> = {};
+
+  for (const entry of entries) {
+    const { Commodity, 'Price Date': date, Price: price } = entry;
+
+    if (!grouped[Commodity]) {
+      grouped[Commodity] = [];
+    }
+
+    grouped[Commodity].push({ date, price });
+  }
+
+  return grouped;
+}

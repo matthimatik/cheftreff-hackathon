@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ActionButton } from '@/ActionButton';
 import { exportPdf } from '../utils/exportPdf';
+import { useNavigate } from 'react-router-dom';
+import { LineChartComponent } from '@/LineChart';
+import { LineChart } from 'recharts';
+import CommodityChart from '@/CommodityChart';
+import CommodityCharts from '@/CommodityChart';
 
 const ALL_TOPICS = {
     'HIGHLIGHTS': 'HIGHLIGHTS',
@@ -15,23 +20,123 @@ const ALL_TOPICS = {
     'retail_meb_non-food': 'Retail prices for MEB non-food components',
     'map': 'Map: Population density and MEB Mapping'
 };
-    
 
 const Report: React.FC = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  // state of csv files per topic
+  const [csvFiles, setCsvFiles] = useState<{ [key: string]: string | undefined }>({});
+
+  // const navigate = useNavigate();
 
   const url = window.location.href;
   const countryName = url.split('/').pop();
+
+  // set initial value for each csv mapping of selected topics to undefined
+  useEffect(() => {
+    const initialCsvFiles: { [key: string]: string | undefined } = {};
+    Object.keys(ALL_TOPICS).forEach((topic) => {
+      initialCsvFiles[topic] = undefined;
+    });
+    setCsvFiles(initialCsvFiles);
+    }, []);
+
+    // Fetch data from the backend and set it to the preview 
+    const fetchCSVData = async (topic: string) => {
+        const response = await fetch(`http://localhost:8000/csv/${countryName}/${topic}`);
+    // get response csv
+        const data = await response.text();
+        // console.log('CSV data:', data);
+
+        // set csv file for the topic
+        setCsvFiles((prev) => ({
+            ...prev,
+            [topic]: data
+        }));
+
+        // parse csv and show in preview
+        /*const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const pdfPreview = document.getElementById('pdf-preview');
+        if (pdfPreview) {
+        pdfPreview.innerHTML = ''; // Clear previous content
+        pdfPreview.appendChild(doc.documentElement);
+        }
+        console.log('Parsed HTML:', doc.documentElement);*/
+    };
+
+
+    /*useEffect(() => {
+        // Fetch data from the backend and set it to the preview 
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8000/csv/${countryName}/${selectedTopics[0]}`);
+        // get response csv
+            const data = await response.text();
+            console.log('CSV data:', data);
+
+            // parse csv and show in preview
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, 'text/html');
+            const pdfPreview = document.getElementById('pdf-preview');
+            if (pdfPreview) {
+            pdfPreview.innerHTML = ''; // Clear previous content
+            pdfPreview.appendChild(doc.documentElement);
+            }
+            console.log('Parsed HTML:', doc.documentElement);
+        };
+
+        if (selectedTopics.length > 0) {
+            console.log('Selected topics:', selectedTopics);
+            fetchData();
+        }
+
+    // Cleanup function to reset the preview when topics change
+    return () => {
+        const pdfPreview = document.getElementById('pdf-preview');
+        if (pdfPreview) {
+        pdfPreview.innerHTML = ''; // Clear previous content
+        }
+    };
+    }, [selectedTopics]);*/
+
 
   // Toggle selected topics
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
       prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic]
     );
+    fetchCSVData(topic);
   };
 
   // Dummy image data (replace with actual base64 images if necessary)
   const images: string[] = [];
+
+  const display_plot = (topic: string) => {
+    // return line chart with csv data
+    const csvData = csvFiles[topic];
+
+    // change data from csv to json
+    /*const jsonData = csvData?.split('\n').map((line) => {
+      const [date, value] = line.split(',');
+      return { date, value: parseFloat(value) };
+    });
+
+    console.log(jsonData);*/
+
+    if (csvData) {
+      // if topic == energy_prices, show commodity chart
+        if (topic === 'energy_prices') {
+            return (
+                <CommodityCharts
+                    data={csvData}
+                />
+            );
+        }
+
+        return (
+            < div/>
+      );
+    }
+  }
 
   const handleCreateReportTapped = () => {
     const sendData = async () => {
@@ -40,7 +145,7 @@ const Report: React.FC = () => {
             selected_topics: selectedTopics,
             });
 
-        console.log('Sending data to backend:', body);
+      console.log('Sending data to backend:', body);
 
       const response = await fetch('http://localhost:8000/report', {
         method: 'POST',
@@ -126,7 +231,11 @@ const Report: React.FC = () => {
               <h4 className="text-lg font-bold text-blue-600">{topic}</h4>
               <p className="text-sm text-gray-600">
                 (Sample content placeholder for "{topic}")
+                
               </p>
+              <div>
+                {display_plot(topic)}
+              </div>
             </div>
           ))}
         </div>
