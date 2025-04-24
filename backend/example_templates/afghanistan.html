@@ -1,97 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afghanistan Weekly Market Report - April 2025</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-    header, footer {
-      background: #f7f7f7;
-      padding: 1rem;
-      text-align: center;
-    }
-    main {
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 2rem;
-    }
-    h2 {
-      color: #333;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 0.3rem;
-    }
-    .note {
-      background: #eef;
-      border-left: 5px solid #88f;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WFP Afghanistan Weekly Market Report - Issue 242</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Optional: Tailwind custom configuration (if needed)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Add custom styles if needed, complementing Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Tailwind gray-300 */
+            padding: 0.75rem; /* Tailwind p-3 */
+            text-align: left;
+            vertical-align: top; /* Align content top */
+        }
+        th {
+            background-color: #f7fafc; /* Tailwind gray-100 */
+            font-weight: 600; /* Tailwind font-semibold */
+        }
+        /* Responsive table styles */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+        @media (max-width: 768px) {
+             th, td {
+                padding: 0.5rem; /* Smaller padding on mobile */
+                font-size: 0.875rem; /* Smaller font size */
+             }
+             h1 { font-size: 1.5rem; } /* Adjust heading sizes */
+             h2 { font-size: 1.25rem; }
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>Afghanistan Weekly Market Report</h1>
-    <p>Issue 242 | Week 1 – April 2025</p>
-  </header>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8">
 
-  <main>
-    <section id="overview">
-      <h2>Highlights</h2>
-      <p class="note">Placeholder for summary of food price trends, labour conditions, and fuel prices.</p>
-    </section>
+    <div class="container mx-auto max-w-4xl bg-white p-6 md:p-10 rounded-lg shadow-md">
 
-    <section id="food-items">
-        <h2>Food Commodity Prices</h2>
-        <p class="note">Placeholder for wheat, rice, pulses, sugar, salt, oil price trends and comparisons to previous years.</p>
-        <img diagram="my-specific-diagram">
-    </section>
-    
+        <header class="mb-8 text-center border-b pb-4">
+            <p class="text-sm text-gray-500">United Nations World Food Programme</p>
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-700 mt-2">AFGHANISTAN</h1>
+            <h2 class="text-xl md:text-2xl font-semibold text-gray-700 mt-1">Weekly Market Report</h2>
+            <p class="text-md text-gray-600 mt-1">Issue 242: Week 1 - April 2025</p>
+        </header>
 
-    <section id="wfp-basket">
-      <h2>WFP Food Basket</h2>
-      <p class="note">Placeholder for weekly and yearly trends in the WFP food basket price.</p>
-    </section>
+        <main>
 
-    <section id="vegetables">
-      <h2>Vegetable Prices</h2>
-      <p class="note">Placeholder for tomato, onion, and potato prices, regional variations and seasonality.</p>
-    </section>
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2">Highlights</h2>
 
-    <section id="non-food-items">
-      <h2>Non-Food Commodities</h2>
-      <p class="note">Placeholder for DAP, urea, improved seeds, animal feed price changes and long-term trends.</p>
-    </section>
+                <div class="space-y-4">
+                    <p><strong>Food Items:</strong> In the first week of April 2025, the prices of main food commodities show a slight week-on-week decline. Compared to the same time last year, an overall decline is observed except for cooking oil and salt, which are significantly higher. Prices have remained relatively stable during 2025 due to a stable exchange rate. However, current food prices are still significantly higher compared to pre-Covid levels and June 2021, except for wheat grain, wheat flour, and cooking oil.</p>
 
-    <section id="diesel">
-      <h2>Diesel Prices</h2>
-      <p class="note">Placeholder for national and global diesel price trends, comparisons with pre-Covid and 2021 levels.</p>
-    </section>
+                    <p><strong>WFP Food Basket:</strong> Declined by 0.5% compared to last week, maintaining a stable trend in 2025. Year-on-year, the price is relatively unchanged (-2%). It remains 9% higher than the pre-Covid period.</p>
 
-    <section id="labour-market">
-      <h2>Labour Market Trends</h2>
-      <p class="note">Placeholder for availability and wages of skilled and unskilled labour, seasonal demand, ToT.</p>
-    </section>
+                    <p><strong>Vegetable Items:</strong> Tomato price declined by 2.4%, while potato and onion prices increased by 1.7% and 9.3%, respectively. Prices are expected to decline with local production availability. Notable price variations exist across provinces due to local harvest and imports (mainly Iran and Pakistan).</p>
 
-    <section id="tot">
-      <h2>Terms of Trade (ToT)</h2>
-      <p class="note">Placeholder for nominal and real ToT for labour and pastoralists, calculated in wheat equivalents.</p>
-    </section>
+                    <p><strong>Non-food Items:</strong> Minimal changes in DAP, urea, improved seeds, and animal feed prices compared to last week. Year-on-year trends show a slight decline for DAP, urea, and improved seeds. Urea and DAP prices remain significantly higher than June 2021, while improved seeds decreased.</p>
 
-    <section id="tv-trigger">
-      <h2>Transfer Value (TV) Revision Triggers</h2>
-      <p class="note">Placeholder for FSAC basket price changes, thresholds and analysis for adjusting assistance value.</p>
-    </section>
-  </main>
+                    <p><strong>Diesel:</strong> National average price is AFN 58.0/litre, down 0.7% from last week and 5% from last year. It is 29% higher than pre-Covid levels and 17% above June 2021 prices. Global average diesel price is $1.18/litre.</p>
 
-  <footer>
-    <p>Source: WFP Afghanistan | <a href="https://www.globalpetrolprices.com/diesel_prices">Global Diesel Prices</a></p>
-  </footer>
+                    <p><strong>Labour Market:</strong> Slight improvement in labour availability as spring begins (construction/agriculture demand increases). However, workdays per week are significantly lower compared to pre-Covid and June 2021 levels, reflecting reduced opportunities.</p>
+                </div>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2">Weekly Price Changes and Trend Analysis</h2>
+                <div class="table-responsive">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Commodity</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">This Week (AFN)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">vs Last Week (%)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">vs Last Year (%)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">vs Pre-Covid (%)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">vs Jun 2021 (%)</th>
+                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">vs 4-Y Avg (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="bg-gray-50">
+                                <td colspan="7" class="px-4 py-2 font-semibold text-gray-700">Exchange Rate & Food Commodities</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Exchange Rate (AFN/USD)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">71.5</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-5%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-9%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-12%</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Wheat Grain (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">24</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.2%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-10%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">19%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-29%</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Wheat Flour - High price (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">29</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.9%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-6%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-8%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">13%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-25%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Wheat Flour - Low price (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">26</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.5%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-9%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">15%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-26%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Rice - High Price - "Palawi" (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">97</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-2%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">20%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">99%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-6%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Rice - Low Price - "Sholae" (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">57</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-1.0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-8%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">39%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">15%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Cooking Oil (AFN/Liter)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">111</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">18%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">44%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">17%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-17%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Pulses (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">103</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.2%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">40%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">10%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-49%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Sugar (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">57</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-1.1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-17%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">36%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">12%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-8%</td> </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Bread (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">59</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-6%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">12%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-49%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Salt (AFN/Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">20</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1.0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">20%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">71%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">50%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">28%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Tomato (AFN/KG)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">38</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-2.4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-17%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">45%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-17%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Potato (AFN/KG)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">26</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1.7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">26%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">59%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Onion (AFN/KG)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">26</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">9.3%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-14%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">58%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">17%</td> </tr>
+
+                            <tr class="bg-gray-50">
+                                <td colspan="7" class="px-4 py-2 font-semibold text-gray-700">Non-food Commodities & Labour</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1-year Old Live Female Sheep (AFN/Head)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">8,086</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.6%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">2%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">9%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">7%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">29%</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Unskilled Labour Wage (AFN/day)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">309</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">2%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Skilled Labour Wage (AFN/day)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">672</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.9%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">11%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">3%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">7%</td> </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Days of Unskilled Work Available Per Week</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">2.3</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">3.3%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">6%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-19%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">6%</td> </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Diesel (AFN/Liter)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">58.0</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-0.7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-5%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">29%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">17%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-8%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Fertilizer - DAP (AFN/50 Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">3,909</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-7%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">37%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-12%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Fertilizer - Urea (AFN/50 Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1,628</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.4%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-9%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">27%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-21%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Improved Seed (AFN/50 Kg)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1,818</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-1.8%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-5%</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-49%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-16%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Animal feed (Concentrate) AFN/100kg</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">2,752</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">N/A</td> <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">-4%</td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Casual Labour wage/wheat Nominal (Kgs)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">11.9</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">0.0%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">3%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">18%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">17%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">33%</td> </tr>
+                             <tr>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">Pastoralist Terms of Trade (Kgs)</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">311</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">1.1%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">7%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">5%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">25%</td>
+                                <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">34%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">*Note: Some values in the table were interpreted or marked N/A due to apparent typos or missing data in the source text.</p>
+            </section>
+
+             <section class="mb-8">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2">Change in Key Commodity Prices (Week-on-week)</h2>
+                <p class="text-sm text-gray-600 mb-4">Provinces displayed represent those with the highest percentage change and highest/lowest price.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2">Wheat Flour (High)</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li>Highest Increase: +10% Sari Pul</li>
+                            <li>Highest Decrease: -4% Balkh</li>
+                            <li>Highest Price: 37 AFN (Nuristan)</li>
+                            <li>Lowest Price: 26 AFN (Sari Pul)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">Wheat Grain</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +3% Hilmand</li>
+                             <li>Highest Decrease: -5% Baghlan</li>
+                             <li>Highest Price: 29 AFN (Ghazni)</li>
+                             <li>Lowest Price: 18 AFN (Takhar)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Wheat Flour (Low)</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li>Highest Increase: +9% Kandahar</li>
+                            <li>Highest Decrease: -8% Jawzjan</li>
+                            <li>Highest Price: 34 AFN (Nuristan)</li>
+                            <li>Lowest Price: 22 AFN (Takhar)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">Rice (Palawi)</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +5% Zabul</li>
+                             <li>Highest Decrease: -5% Takhar</li>
+                             <li>Highest Price: 130 AFN (Nuristan)</li>
+                             <li>Lowest Price: 80 AFN (Uruzgan)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">Cooking Oil</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +7% Faryab</li>
+                             <li>Highest Decrease: -5% Samangan</li>
+                             <li>Highest Price: 131 AFN (Daykundi)</li>
+                             <li>Lowest Price: 100 AFN (Kunduz)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">Pulses</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +16% Nuristan</li>
+                             <li>Highest Decrease: -11% Samangan</li>
+                             <li>Highest Price: 137 AFN (Kunar)</li>
+                             <li>Lowest Price: 73 AFN (Takhar)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Sugar</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li>Highest Increase: +9% Samangan</li>
+                            <li>Highest Decrease: -9% Farah</li>
+                            <li>Highest Price: 70 AFN (Daykundi)</li>
+                            <li>Lowest Price: 50 AFN (Kapisa)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">Diesel</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +5% Jawzjan</li>
+                             <li>Highest Decrease: -8% Farah</li>
+                             <li>Highest Price: 65 AFN (Nuristan)</li>
+                             <li>Lowest Price: 52 AFN (Nimroz)</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold mb-2">1-Year Live Female Sheep</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                             <li>Highest Increase: +8% Jawzjan</li>
+                             <li>Highest Decrease: -6% Badghis</li>
+                             <li>Highest Price: 10,500 AFN (Paktya)</li>
+                             <li>Lowest Price: 6,000 AFN (Nuristan)</li>
+                        </ul>
+                    </div>
+                </div>
+             </section>
+
+            <section class="mb-8">
+                 <h2 class="text-xl font-semibold mb-4 border-b pb-2">Data Visualizations (Summary)</h2>
+                 <div class="space-y-3 text-sm text-gray-700">
+                    <p><strong>WFP Food Basket Prices:</strong> The report includes a graph showing the trend of WFP Food Basket prices in AFN and USD from 2020 to April 2025. Recent prices show relative stability in 2025 after significant fluctuations in previous years.</p>
+                    <p><strong>Casual Labour Wage/Wheat Flour ToT:</strong> A graph illustrates Nominal and Real Terms of Trade (ToT) for casual labour wage against low-quality wheat flour. Nominal ToT is 11.9 kgs, while Real ToT (adjusted for work availability) is 3.9 kgs, showing slight recent improvement.</p>
+                    <p><strong>National Average Price Trends:</strong> Graphs depict trends for Exchange Rate, Diesel, Fertilizers, Seeds, Animal Feed, Wheat, Rice, Pulses, Cooking Oil, Tomato, Potato, and Onion from 2020 to April 2025.</p>
+                 </div>
+            </section>
+
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2">Notes</h2>
+                <ul class="list-disc list-inside space-y-2 text-sm text-gray-700">
+                    <li>Price data collected weekly from 34 provincial capitals.</li>
+                    <li>Rice types reported: Palawi (long-grain, imported, expensive) and Sholae (short-grain, domestic, cheaper).</li>
+                    <li>Pulses price is an average of lentils, chickpeas, and red beans.</li>
+                    <li>Pastoralist ToT: Kg of wheat grain obtainable by selling a 1-year-old female sheep.</li>
+                    <li>Real Unskilled Labour ToT: Kg of wheat grain obtainable with average daily wage adjusted by average weekly workdays. Nominal ToT excludes work availability adjustment.</li>
+                    <li>Casual Labour: Unskilled, hired short-term, lower pay rate.</li>
+                    <li>Price Table Interpretation: Positive changes mean price decrease (good for consumers), negative changes mean price increase. For ToT/Wages, positive means improvement, negative means decline. Color coding (not implemented here) indicates significance of changes.</li>
+                </ul>
+            </section>
+
+        </main>
+
+        <footer class="mt-10 pt-6 border-t text-center text-sm text-gray-500">
+            <p>Source: WFP Afghanistan Weekly Market Report - Issue 242, Week 1 - April 2025.</p>
+            <p>Reference: Global Petrol Prices (diesel prices).</p>
+        </footer>
+
+    </div>
+
 </body>
 </html>
