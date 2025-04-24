@@ -9,5 +9,5 @@ dependencies = [
     "matplotlib>=3.10.1",
     "pandas>=2.2.3",
     "google-genai>=1.11.0",
-    "requests>=2.32.3",
+    "tqdm>=4.67.1",
 ]
