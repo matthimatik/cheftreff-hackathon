@@ -1,3 +1,4 @@
+from typing import List
 from settings import DATA_DIR
 
 import requests
@@ -18,7 +19,7 @@ from google.genai.types import (
 )
 
 
-def get_report() -> str:
+def get_report(country: str, selected_topics: List[str]) -> str:
 
     def stream_data(iterator):
         buffer = ""
@@ -95,14 +96,15 @@ def get_report() -> str:
 
     contents = []
     contents.append(
-    """<MISSION>
+    f"""<MISSION>
     Create a detailed monthly report for:
-    <COUNTRY>SYRIA</COUNTRY>
+    <COUNTRY>{country}</COUNTRY>
     <DATE>2024-12</DATE>
     </MISSION>""")
     contents.append("<TEMPLATES>\nUse the following templates as a reference for your report. Follow the structure and style of the templates.")
     contents += template_pdfs
     contents.append("</TEMPLATES>")
+    contents.append(f"Add the following sections to your report: {', '.join(selected_topics)}")
     contents.append("""<AVAILABLE DATA>""")
     contents.append(
     f"""<WEBSITE HREF>
@@ -135,4 +137,4 @@ def get_report() -> str:
     ))
 
 if __name__ == "__main__":
-    print(get_report())
+    print(get_report("Syria", ["HIGHLIGHTS", "economic_updates"]))
