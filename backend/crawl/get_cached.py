@@ -19,7 +19,7 @@ def get_cached(url: str) -> str:
 
     cached_data_file = cache.get(url)
     if cached_data_file is not None:
-        return (CRAWL_CACHE_DIR / cached_data_file).read_text()
+        return (CRAWL_CACHE_DIR / cached_data_file).read_text(encoding="utf-8")
 
     response = requests.get(url)
     if response.status_code != 200:
@@ -30,7 +30,7 @@ def get_cached(url: str) -> str:
     target_file_name = f"{cache_id}.txt"
     cache[url] = target_file_name
 
-    with open(CRAWL_CACHE_DIR / target_file_name, "w") as f:
+    with open(CRAWL_CACHE_DIR / target_file_name, "w", encoding="utf-8") as f:
         f.write(data)
 
     with open(cache_path, "w") as f:
