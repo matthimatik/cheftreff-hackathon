@@ -1,3 +1,4 @@
+import { ActionButton } from '@/ActionButton';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,13 +53,7 @@ const CountrySelection: React.FC = () => {
           <option key={idx} value={country}>{country}</option>
         ))}
       </select>
-
-      <button
-        onClick={handleNextStep}
-        className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-      >
-        Next: Create Report
-      </button>
+      <ActionButton label="Create Report" onClick={handleNextStep} />
     </div>
   );
 };

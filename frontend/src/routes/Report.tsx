@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActionButton } from '@/ActionButton';
 import { exportPdf } from '../utils/exportPdf';
 
@@ -20,6 +20,9 @@ const ALL_TOPICS = [
 const Report: React.FC = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
 
+  const url = window.location.href;
+  const countryName = url.split('/').pop();
+
   // Toggle selected topics
   const toggleTopic = (topic: string) => {
     setSelectedTopics((prev) =>
@@ -35,9 +38,29 @@ const Report: React.FC = () => {
     exportPdf({ topics: selectedTopics, images });
   };
 
+  /*useEffect(() => {
+    console.log('Country Name:', countryName);
+
+    // send country name to backend
+    const sendData = async () => {
+        const response = await fetch('http://localhost:8000/countries', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ country_name: countryName }),
+        });
+    
+        const data = await response.json();
+        console.log('Response from backend:', data);
+        }
+
+    sendData();
+  }, []);*/
+
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Build Your Report</h2>
+      <h2 className="text-xl font-semibold">Building Report for: {countryName}</h2>
 
       <div className="space-y-2">
         {ALL_TOPICS.map((topic) => (
