@@ -36,10 +36,12 @@ const Report: React.FC = () => {
   const handleCreateReportTapped = () => {
     const sendData = async () => {
         const body = JSON.stringify({
-            country_name: countryName,
-            topics: selectedTopics,
+            country: countryName,
+            selected_topics: selectedTopics,
             });
+
         console.log('Sending data to backend:', body);
+
       const response = await fetch('http://localhost:8000/report', {
         method: 'POST',
         headers: {
@@ -55,6 +57,16 @@ const Report: React.FC = () => {
 
       const data = await response.json();
       console.log('Response from backend:', data);
+
+      // parse html response from backend and show
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data.result, 'text/html');
+        const pdfPreview = document.getElementById('pdf-preview');
+        if (pdfPreview) {
+          pdfPreview.innerHTML = ''; // Clear previous content
+          pdfPreview.appendChild(doc.documentElement);
+        }
+        console.log('Parsed HTML:', doc.documentElement);
     };
     sendData();
     // Export the PDF with selected topics and images

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from service import generate_report
+from service import generate_report, generate_report_for_country
 from plot_service import get_countries
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -31,4 +31,9 @@ async def main_endpoint(payload: dict):
 @app.get("/countries")
 async def get_countries_endpoint():
     result = get_countries()
+    return {"result": result}
+
+@app.post("/report")
+async def report_endpoint(payload: dict):
+    result = generate_report_for_country(payload)
     return {"result": result}
