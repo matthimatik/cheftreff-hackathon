@@ -7,6 +7,8 @@ from settings import DATA_DIR
 
 import requests
 from crawl.reliefweb import get_reliefweb_data
+import re
+import pandas as pd
 
 
 from google import genai
@@ -32,6 +34,7 @@ def stream_data(iterator):
     buffer = ""
     for chunk in iterator:
         buffer += chunk.text
+        print(chunk.text, end="")
     return buffer
 
 
@@ -84,14 +87,19 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
     ),
     ]
 
-    data_csvs = [
-    f"<CSV><SRC>{cite_manager.register_cite('some-file.csv', 'CSV (INTERNAL)')}</SRC><DATA>",
-    Part.from_bytes(
-        data=(DATA_DIR / "Syrian Arab Republic_energy.csv").read_bytes(),
-        mime_type="text/csv",
-    ),
-    "</DATA><CSV>",
-    ]
+    data_csvs = []
+    for file in sorted((DATA_DIR /"syria-csv/").glob("*.csv")):
+        if file.stat().st_size > 100 * 1024:  # Check if file size is greater than 100KB
+            df = pd.read_csv(file, encoding="utf-8")
+            aggregated_data = aggregate_dataframe(df)
+            data_csvs.append(
+            f"<CSV-AGG><SRC>{cite_manager.register_cite(file.name, 'CSV-AGG (DATAVIZ)')}</SRC><DATA>{aggregated_data}</DATA></CSV-AGG>"
+            )
+        else:
+            csv_data = file.read_text()
+            data_csvs.append(
+            f"<CSV><SRC>{cite_manager.register_cite(file.name, 'CSV (DATAVIZ)')}</SRC><DATA>{csv_data}</DATA></CSV>"
+            )
 
     contents = []
     contents.append(
@@ -100,7 +108,7 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
     <COUNTRY>SYRIA</COUNTRY>
     <DATE>2024-12</DATE>
     <AUTHOR>TEAM Chäffchen<cheftreff@weboverflow.de></AUTHOR> Do not refer to other authors for questions.
-    Cite where you got information from. The source data denotes this in <ID>id here</ID> for each input you use in your report. Style: `<SRC>id here</SRC>`.
+    Cite where you got information from. The source data denotes this in <ID>id here</ID> for each input you use in your report. Style: `<SRC>id here</SRC>`. Maximum 3 citations per claim.
     <SECTION>Add the following sections to your report: {', '.join(selected_topics)}</SECTION>
     </MISSION>""")
 
@@ -135,7 +143,8 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
             ),
         ),
     ))
-    return agent_response
+    output = re.sub(r"<SRC>(\d+)</SRC>", lambda match: cite_manager.format_html(match.group(1)), agent_response, flags=re.IGNORECASE)
+    return output
 
 if __name__ == "__main__":
     print(get_report("Syria", ["HIGHLIGHTS", "economic_updates"]))

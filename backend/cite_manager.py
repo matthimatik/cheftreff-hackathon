@@ -42,3 +42,12 @@ class CiteManager:
         if cite is None:
             return f"[INVALID CITE]()"
         return f"[{cite.source}]({cite.url})"
+
+    def format_html(self, cite_id: int) -> str:
+        """
+        Returns the markdown format of a citation.
+        """
+        cite = self.id2cite.get(int(cite_id))
+        if cite is None:
+            return f"[INVALID CITE]()"
+        return f'<a href="{cite.url}">{cite.source}</a>'

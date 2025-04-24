@@ -20,6 +20,12 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+def get_html_png(base64):
+    """
+    Converts a base64 string to an HTML image tag.
+    """
+    return f'<img src="data:image/png;base64,{base64}" alt="plot" />'
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -33,6 +39,8 @@ async def get_countries_endpoint():
 async def report_endpoint(payload: dict = {}):
     print(f"REQUEST: {payload}")
     result = generate_report(payload)
+    result += get_html_png(await get_plot_base64(payload["country"], "energy_prices"))
+    result += get_html_png(await get_plot_base64(payload["country"], "retail_prices_key_commodities"))
     return {"result": result}
 
 @app.get("/csv/{country}/{context}")
@@ -59,7 +67,7 @@ async def get_exchange_rate(country: str):
 @app.get("/plot/{country}/{context}/base64")
 async def get_plot_base64(country, context):
     csv = generate_price_over_month_csv(country, context)
-    base64_string = plot_csv(f'{country}_{context}', csv, from_path=False)
+    base64_string = plot_csv(f'{country}_{context}', csv.read(), from_path=False)
     if "Error:" in base64_string:
         return {"error": base64_string}  # Return the error message
-    return {"image_base64": base64_string}  
+    return base64_string

@@ -12,6 +12,12 @@
   }
 }*/
 
+#pdf-preview a {
+  color: blue !important;
+  margin-right: 8px !important;
+  text-decoration: underline !important;
+}
+
 :root {
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
