@@ -12,7 +12,12 @@ const CountrySelection: React.FC = () => {
     const fetchCountries = async () => {
       const response = await fetch('http://localhost:8000/countries');
       const data = await response.json();
-      setCountries(data.countries);
+        if (!response.ok) {
+            console.error('Failed to fetch countries:', data);
+            return;
+        } else {
+            setCountries(data.result.countries);
+        }
     };
     
     fetchCountries();
