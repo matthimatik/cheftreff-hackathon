@@ -1,7 +1,13 @@
 from typing import List
+from urllib import response
+
+from crawl.arbitrary_source import url_encode_model
+from cite_manager import CiteManager
 from settings import DATA_DIR
 
 import requests
+from crawl.reliefweb import get_reliefweb_data
+
 
 from google import genai
 from google.genai.types import (
@@ -18,6 +24,10 @@ from google.genai.types import (
     Content
 )
 
+BACKSLASH = "\n"
+
+
+
 def stream_data(iterator):
     buffer = ""
     for chunk in iterator:
@@ -26,6 +36,8 @@ def stream_data(iterator):
 
 
 def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str:
+    cite_manager = CiteManager()
+
     client = genai.Client(api_key="AIzaSyDKiNNII-XOFMkQdJ3VQD61j8KgZEN-4xg")
     MODEL_ID = "gemini-2.5-flash-preview-04-17"
 
@@ -42,6 +54,7 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
     Your highest priority is accuracy and a truthful report.
     """
 
+    relief_data = get_reliefweb_data(226, 2024, 12)  # syria, year, month
 
     template_pdfs = [
         Part.from_bytes(
@@ -52,13 +65,17 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
             data=(DATA_DIR / "example_templates/syria.html").read_bytes(),
             mime_type="text/html",
         ),
+        Part.from_bytes(
+            data=(DATA_DIR / "example_templates/yemen.html").read_bytes(),
+            mime_type="text/html",
+        ),
+        Part.from_bytes(
+            data=(DATA_DIR / "example_templates/afghanistan.html").read_bytes(),
+            mime_type="text/html",
+        ),
     ]
 
-    data_urls = [
-        "https://reliefweb.int/updates?list=Syrian%20Arab%20Republic%20%28Syria%29%20Updates&advanced-search=%28PC226%29",
-        # "https://www.bbc.com/news/topics/cx1m7zg0w5zt",
-    ]
-    data_urls += urls
+    data_urls = urls
 
     data_pdfs = [
         Part.from_bytes(
@@ -68,48 +85,49 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
     ]
 
     data_csvs = [
-    "<Syrian Arab Republic Energy.csv>",
+    f"<CSV><SRC>{cite_manager.register_cite('some-file.csv', 'CSV (INTERNAL)')}</SRC><DATA>",
     Part.from_bytes(
         data=(DATA_DIR / "Syrian Arab Republic_energy.csv").read_bytes(),
         mime_type="text/csv",
     ),
-    "</Syrian Arab Republic Energy.csv>",
+    "</DATA><CSV>",
     ]
 
     contents = []
     contents.append(
     f"""<MISSION>
     Create a detailed monthly report for:
-    <COUNTRY>{country}</COUNTRY>
+    <COUNTRY>SYRIA</COUNTRY>
     <DATE>2024-12</DATE>
+    <AUTHOR>TEAM Chäffchen<cheftreff@weboverflow.de></AUTHOR> Do not refer to other authors for questions.
+    Cite where you got information from. The source data denotes this in <ID>id here</ID> for each input you use in your report. Style: `<SRC>id here</SRC>`.
+    <SECTION>Add the following sections to your report: {', '.join(selected_topics)}</SECTION>
     </MISSION>""")
+
     contents.append("<TEMPLATES>\nUse the following templates as a reference for your report. Follow the structure and style of the templates.")
     contents += template_pdfs
     contents.append("</TEMPLATES>")
-    contents.append(f"Add the following sections to your report: {', '.join(selected_topics)}")
+
     contents.append("""<AVAILABLE DATA>""")
     contents.append(
-    f"""<WEBSITE HREF>
-    Use the following web pages. You must crawl links using the provided tool to retrieve more data
-    {[f"<WEBSITE><URL>{x}</URL><HTML>{crawl_website_data(x)}</HTML></WEBSITE>" for x in data_urls]}
-    </WEBSITE HREF>
+    f"""<WEBSITES>
+    {BACKSLASH.join([url_encode_model(x, cite_manager) for x in data_urls])}
+    </WEBSITES>
     """)
-    contents.append("<PDF FILES>\nUse the following PDF files as data sources for your report.")
-    contents += data_pdfs
-    contents.append("</PDF FILES>")
-
-    contents.append("<CSV>\nUse the following CSV files as data sources for your report.")
+    contents.append("<ARTICLES>")
+    contents += [x.encode_model(cite_manager) for x in relief_data]
+    contents.append("</ARTICLES>")
+    contents.append("<CSV>")
     contents += data_csvs
-    contents.append("</CSV")
-
+    contents.append("</CSV>")
     contents.append("""</AVAILABLE DATA>""")
 
-    return stream_data(client.models.generate_content_stream(
+    agent_response = stream_data(client.models.generate_content_stream(
         model=MODEL_ID,
         contents=contents,
         config=GenerateContentConfig(
             tools=[
-                crawl_website_data,
+                # TODO: function to read details of reliefweb data
             ],
             system_instruction=system_instruction,
             thinking_config=ThinkingConfig(
@@ -117,6 +135,7 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
             ),
         ),
     ))
+    return agent_response
 
 if __name__ == "__main__":
     print(get_report("Syria", ["HIGHLIGHTS", "economic_updates"]))
