@@ -5,6 +5,7 @@ import Home from './routes/Home';
 import Upload from './routes/Upload';
 import Report from './routes/Report';
 import CountrySelection from './routes/Onboarding';
+import About from './routes/About';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         { /*<Route index element={<Home />} />*/ }
         <Route path="upload" element={<Upload />} />
         <Route path="report" element={<Report />} />
+        <Route path="about" element={<About />} />
       </Route>
     </Routes>
   );
