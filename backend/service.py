@@ -6,4 +6,6 @@ def generate_report(data: dict) -> str:
     if not country or not selected_topics:
         raise ValueError("Country and selected topics must be provided.")
     
-    return get_report(country, selected_topics)
+    report = get_report(country, selected_topics)
+    print(report)
+    return report
