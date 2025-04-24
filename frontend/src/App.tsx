@@ -1,14 +1,20 @@
-import { Button } from "@/components/ui/button"
-import { LineChartComponent } from "./LineChart"
-import UploadCsv from "./UploadCSV"
- 
-function App() {
+
+import { Routes, Route } from 'react-router-dom';
+import MainLayout from './layout/MainLayout';
+import Home from './routes/Home';
+import Upload from './routes/Upload';
+import Report from './routes/Report';
+
+const App = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <UploadCsv />
-      <Button>Create Report</Button>
-    </div>
-  )
-}
- 
-export default App
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="upload" element={<Upload />} />
+        <Route path="report" element={<Report />} />
+      </Route>
+    </Routes>
+  );
+};
+
+export default App;
