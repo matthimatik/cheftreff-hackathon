@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from service import generate_report
+from plot_service import get_countries
 
 app = FastAPI()
 
@@ -14,6 +15,6 @@ async def main_endpoint(payload: dict):
     return {"result": result}
 
 @app.get("/countries")
-async def get_countries():
+async def get_countries_endpoint():
     result = get_countries()
     return {"result": result}
