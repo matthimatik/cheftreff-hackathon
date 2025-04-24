@@ -50,4 +50,4 @@ class CiteManager:
         cite = self.id2cite.get(int(cite_id))
         if cite is None:
             return f"[INVALID CITE]()"
-        return f'<a href="{cite.url}">{cite.source}</a>'
+        return f'<a href="{cite.url}" target="_blank">{cite.source}</a>'
