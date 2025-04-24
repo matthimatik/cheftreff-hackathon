@@ -4,9 +4,10 @@ import html2canvas from 'html2canvas';
 interface Props {
   chartId: string; // the DOM ID of the chart container
   rawData: Record<string, number>;
+  topics: string[];
 }
 
-export const PdfExportButton: React.FC<Props> = ({ chartId, rawData }) => {
+export const PdfExportButton: React.FC<Props> = ({ chartId, rawData, topics }) => {
   const handleExport = async () => {
     const input = document.getElementById(chartId);
 
@@ -22,6 +23,14 @@ export const PdfExportButton: React.FC<Props> = ({ chartId, rawData }) => {
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4',
+    });
+
+    topics.forEach((topic, idx) => {
+      if (idx !== 0) pdf.addPage();
+      pdf.setFontSize(16);
+      pdf.text(topic, 10, 20);
+      pdf.setFontSize(12);
+      pdf.text(`(Placeholder content for "${topic}")`, 10, 30);
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
