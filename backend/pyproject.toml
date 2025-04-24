@@ -8,4 +8,5 @@ dependencies = [
     "fastapi[standard]>=0.115.12",
     "matplotlib>=3.10.1",
     "pandas>=2.2.3",
+    google-genai>=1.11.0
 ]
