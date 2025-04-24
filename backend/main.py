@@ -12,3 +12,8 @@ async def root():
 async def main_endpoint(payload: dict):
     result = generate_report(payload)
     return {"result": result}
+
+@app.get("/countries")
+async def get_countries():
+    result = get_countries()
+    return {"result": result}
