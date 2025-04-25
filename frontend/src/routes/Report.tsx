@@ -29,6 +29,9 @@ const Report: React.FC = () => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   // state of csv files per topic
   const [csvFiles, setCsvFiles] = useState<{ [key: string]: string | undefined }>({});
+  // is loading state
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
 
   // const navigate = useNavigate();
 
@@ -151,6 +154,7 @@ const Report: React.FC = () => {
 
   const handleCreateReportTapped = () => {
     const sendData = async () => {
+        setLoading(true);
         const body = JSON.stringify({
             country: countryName,
             selected_topics: selectedTopics,
@@ -167,6 +171,8 @@ const Report: React.FC = () => {
         body: body
       });
 
+      
+
       if (!response.ok) {
         console.error('Failed to generate report:', await response.text());
         return;
@@ -176,14 +182,16 @@ const Report: React.FC = () => {
       console.log('Response from backend:', data);
 
       // parse html response from backend and show
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data.result, 'text/html');
-        const pdfPreview = document.getElementById('pdf-preview');
+        // const parser = new DOMParser();
+        // const doc = parser.parseFromString(data.result, 'text/html');
+        setResult(data.result);
+        setLoading(false);
+        /* const pdfPreview = document.getElementById('pdf-preview');
         if (pdfPreview) {
           pdfPreview.innerHTML = ''; // Clear previous content
           pdfPreview.appendChild(doc.documentElement);
         }
-        console.log('Parsed HTML:', doc.documentElement);
+        console.log('Parsed HTML:', doc.documentElement);*/
     };
     sendData();
     // Export the PDF with selected topics and images
@@ -241,9 +249,31 @@ const Report: React.FC = () => {
   };
 
   return (
+    <>
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Building Report for: {countryName}</h2>
 
+        { loading ? (
+        <div className ="flex flex-col items-center justify-center h-full">
+            <div className="flex items-center">
+            <p className="text-lg font-semibold mr-4">
+                Generating report... 
+            </p>
+            <p className="text-sm text-gray-500">
+                This may take a few seconds (or minutes).
+            </p>
+            </div>
+          <img src="/loading.gif" alt="Loading..." />
+        </div>
+        )
+        :
+        result ? (
+          <div id="pdf-preview" className="border p-4 rounded bg-white shadow">
+            <div dangerouslySetInnerHTML={{ __html: result }} />
+          </div>
+        ) :
+      <>
+      <>
       <div className="flex items-center mb-4">
         <Input
           type="url"
@@ -254,6 +284,10 @@ const Report: React.FC = () => {
         />
         <Button onClick={handleAddUrl}>Add URL</Button>
       </div>
+
+      <p className="text-sm text-gray-500">
+            Select the topics you want to include in the report:
+      </p>
 
       {urlList.length > 0 && (
         <div className="mb-4">
@@ -319,7 +353,10 @@ const Report: React.FC = () => {
         label="🪄 Generate Report"
         onClick={handleCreateReportTapped}
       />
+      </>
+      </> }
     </div>
+    </>
   );
 };
 
