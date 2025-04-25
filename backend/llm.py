@@ -56,6 +56,7 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
     Your mission is to write a detailed monthly report, following the structure of the previous monthly reports. Output format is HTML. ONLY HTML, no text before or after the HTML.
 
     Your highest priority is accuracy and a truthful report.
+    Relate statistics and numbers to claims you make. Use the data provided in the <AVAILABLE DATA> section to support your claims.
     """
 
     relief_data = get_reliefweb_data(226, 2024, 12)  # syria, year, month
@@ -94,12 +95,12 @@ def get_report(country: str, selected_topics: List[str], urls: List[str]) -> str
             df = pd.read_csv(file, encoding="utf-8")
             aggregated_data = aggregate_dataframe(df)
             data_csvs.append(
-            f"<CSV-AGG><SRC>{cite_manager.register_cite(file.name, 'CSV-AGG (DATAVIZ)')}</SRC><DATA>{aggregated_data}</DATA></CSV-AGG>"
+            f"<CSV-AGG><ID>{cite_manager.register_cite(file.name, 'CSV-AGG (DATAVIZ)')}</ID><DATA>{aggregated_data}</DATA></CSV-AGG>"
             )
         else:
             csv_data = file.read_text()
             data_csvs.append(
-            f"<CSV><SRC>{cite_manager.register_cite(file.name, 'CSV (DATAVIZ)')}</SRC><DATA>{csv_data}</DATA></CSV>"
+            f"<CSV><ID>{cite_manager.register_cite(file.name, 'CSV (DATAVIZ)')}</ID><DATA>{csv_data}</DATA></CSV>"
             )
 
     contents = []
