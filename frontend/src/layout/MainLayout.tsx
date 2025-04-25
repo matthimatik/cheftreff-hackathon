@@ -21,7 +21,7 @@ const MainLayout = () => {
             </main>
 
             <footer className="bg-gray-800 text-white p-4 text-center">
-                &copy; 2025 World Food Programme
+                &copy; 2025 TEAM Chäffchen
             </footer>
         </div>
     );

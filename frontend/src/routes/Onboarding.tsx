@@ -20,7 +20,7 @@ const CountrySelection: React.FC = () => {
             setCountries(data.result.countries);
         }
     };
-    
+
     fetchCountries();
   }, []);
 
@@ -53,6 +53,29 @@ const CountrySelection: React.FC = () => {
           <option key={idx} value={country}>{country}</option>
         ))}
       </select>
+
+      <p>Select the Year and Month for the report:</p>
+      <div className="flex space-x-4">
+        <input type="number" placeholder="Year" className="w-1/2 p-2 border rounded-md" />
+        <select
+          className="w-full p-2 border rounded-md"
+        >
+          <option value="" disabled>Select Month</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+      </div>
+
       <ActionButton label="Create Report" onClick={handleNextStep} />
     </div>
   );

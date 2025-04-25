@@ -44,7 +44,7 @@ const Report: React.FC = () => {
     setCsvFiles(initialCsvFiles);
     }, []);
 
-    // Fetch data from the backend and set it to the preview 
+    // Fetch data from the backend and set it to the preview
     const fetchCSVData = async (topic: string) => {
         const response = await fetch(`http://localhost:8000/csv/${countryName}/${topic}`);
     // get response csv
@@ -70,7 +70,7 @@ const Report: React.FC = () => {
 
 
     /*useEffect(() => {
-        // Fetch data from the backend and set it to the preview 
+        // Fetch data from the backend and set it to the preview
         const fetchData = async () => {
             const response = await fetch(`http://localhost:8000/csv/${countryName}/${selectedTopics[0]}`);
         // get response csv
@@ -190,7 +190,7 @@ const Report: React.FC = () => {
     /*exportPdf({
       topics: selectedTopics,
       images,
-    });*/ 
+    });*/
     };
 
   /*useEffect(() => {
@@ -205,7 +205,7 @@ const Report: React.FC = () => {
             },
             body: JSON.stringify({ country_name: countryName }),
         });
-    
+
         const data = await response.json();
         console.log('Response from backend:', data);
         }
@@ -277,7 +277,7 @@ const Report: React.FC = () => {
           </ul>
         </div>
       )}
-      
+
       <div className="space-y-2">
         {/* for each topic */}
         {Object.entries(ALL_TOPICS).map(([key, value]) => (
@@ -304,7 +304,7 @@ const Report: React.FC = () => {
               <h4 className="text-lg font-bold text-blue-600">{topic}</h4>
               <p className="text-sm text-gray-600">
                 (Sample content placeholder for "{topic}")
-                
+
               </p>
               <div>
                 {display_plot(topic)}
@@ -316,7 +316,7 @@ const Report: React.FC = () => {
 
       {/* ActionButton to trigger PDF export */}
       <ActionButton
-        label="Export Report as PDF"
+        label="🪄 Generate Report"
         onClick={handleCreateReportTapped}
       />
     </div>
